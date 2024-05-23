@@ -11,6 +11,15 @@ uniform sampler2D image;
 out vec4 FragColor;
 
 void main() {
-    // Color
-    FragColor = texture(image, model_uv);
+    // calculate the luminance of the frame 
+    vec4 bw_color = texture(image, model_uv);
+    float luminance = (bw_color.r * 0.299) + (bw_color.g * 0.587) + (bw_color.b * 0.114);
+
+    // assign the luminance value to all three color components
+    bw_color.r = luminance;
+    bw_color.g = luminance;
+    bw_color.b = luminance;
+
+    // assign the updated color
+    FragColor = bw_color;
 }
